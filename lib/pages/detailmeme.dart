@@ -1,18 +1,17 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, unnecessary_new, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:meme_app/main.dart';
 
-class MyCreations extends StatefulWidget {
-  const MyCreations({Key? key}) : super(key: key);
+class DetailMeme extends StatefulWidget {
+  const DetailMeme({Key? key}) : super(key: key);
 
   @override
-  State<MyCreations> createState() => _MyCreationsState();
+  State<DetailMeme> createState() => _DetailMemeState();
 }
 
-class _MyCreationsState extends State<MyCreations> {
+class _DetailMemeState extends State<DetailMeme> {
   Card myCard() {
     return Card(
         elevation: 4.0,
@@ -26,19 +25,11 @@ class _MyCreationsState extends State<MyCreations> {
                 color: Colors.white,
                 image: DecorationImage(
                   image: NetworkImage(
-                      'https://media.sproutsocial.com/uploads/meme-example.jpg'),
+                      'https://top5kythu.com/wp-content/uploads/Rose-blackpink-1.png'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                    margin: EdgeInsets.only(top: 10, left: 10),
-                    child: Text("20 Desember 2022 18:30"))
-              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,22 +43,11 @@ class _MyCreationsState extends State<MyCreations> {
                         // ...
                       },
                     ),
-                    Text("150 likes")
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text("5 comments"),
-                    IconButton(
-                      icon: Icon(Icons.message),
-                      onPressed: () {
-                        // ...
-                      },
-                    ),
+                    Text("200 likes")
                   ],
                 ),
               ],
-            ),
+            )
           ],
         ));
   }
@@ -76,12 +56,17 @@ class _MyCreationsState extends State<MyCreations> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Daily Meme Digest"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text("Meme Detail"),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
           padding: EdgeInsets.all(8),
           child: Column(
-            children: [myCard(), myCard(), myCard()],
+            children: [myCard()],
           )),
     );
   }

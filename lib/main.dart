@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, unnecessary_new, prefer_final_fields, sized_box_for_whitespace, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
+import 'package:meme_app/pages/detailmeme.dart';
 import 'package:meme_app/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         'mycreations': (context) => MyCreations(),
         'leaderboard': (context) => Leaderboard(),
         'settings': (context) => Settings(),
+        'detailmeme': (context) => DetailMeme(),
       },
       theme: ThemeData(
         primarySwatch: Colors.purple,
@@ -85,21 +87,24 @@ class _MyHomePageState extends State<MyHomePage> {
             title: new Text("Home"),
             leading: new Icon(Icons.inbox),
             onTap: () {
-              Navigator.popAndPushNamed(context, "home");
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Home()));
             },
           ),
           ListTile(
             title: new Text("My Creations"),
             leading: new Icon(Icons.mood),
             onTap: () {
-              Navigator.popAndPushNamed(context, "mycreations");
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => MyCreations()));
             },
           ),
           ListTile(
             title: new Text("Leaderboard"),
             leading: new Icon(Icons.leaderboard),
             onTap: () {
-              Navigator.popAndPushNamed(context, "leaderboard");
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Leaderboard()));
             },
           ),
           ListTile(

@@ -15,78 +15,81 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text("Settings"),
+        ),
         body: Center(
             child: Column(
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: NetworkImage(
-                    "https://assets.promediateknologi.com/crop/33x301:541x953/x/photo/2022/04/07/3381014888.png"),
-                fit: BoxFit.cover,
-              )),
-        ),
-        Container(
-            child: Column(
-          // ignore: prefer_const_literals_to_create_immutables
           children: [
-            Text('Wemphy Stephian Philipe',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                )),
-            Text('Active since Sept 2022'),
-            Text('wemphysp@gmail.com'),
-            // ignore: prefer_const_literals_to_create_immutables
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 15),
-                    child: TextField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'First Name',
-                          hintText: 'First Name'),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    child: TextField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Last Name',
-                          hintText: 'Last Name'),
-                    ),
-                  ),
-                ],
-              ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: NetworkImage(
+                        "https://assets.promediateknologi.com/crop/33x301:541x953/x/photo/2022/04/07/3381014888.png"),
+                    fit: BoxFit.cover,
+                  )),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Column(
-                children: [
-                  Container(
-                    height: 50,
-                    width: 300,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          ;
-                        },
-                        child: Text('Save Changes')),
+            Container(
+                child: Column(
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                Text('Wemphy Stephian Philipe',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                    )),
+                Text('Active since Sept 2022'),
+                Text('wemphysp@gmail.com'),
+                // ignore: prefer_const_literals_to_create_immutables
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 15),
+                        child: TextField(
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'First Name',
+                              hintText: 'First Name'),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                        child: TextField(
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Last Name',
+                              hintText: 'Last Name'),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 50,
+                        width: 300,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              ;
+                            },
+                            child: Text('Save Changes')),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            )),
           ],
-        )),
-      ],
-    )));
+        )));
   }
 }
