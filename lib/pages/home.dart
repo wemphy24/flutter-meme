@@ -64,9 +64,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Daily Meme Digest"),
-      ),
       body: SingleChildScrollView(
           padding: EdgeInsets.all(8),
           child: Column(

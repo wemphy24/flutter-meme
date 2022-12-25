@@ -29,20 +29,21 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State {
   String _user_id = "";
+  String _user_name="";
   String _user_password = "";
   String error_login = "";
-  final TextEditingController _user_cont = TextEditingController();
+  
   void doLogin() async {
     final response = await http.post(
-        Uri.parse("http://localhost/movies/login.php"),
-        body: {'user_id': _user_id, 'user_password': _user_password});
+        Uri.parse("https://ubaya.fun/flutter/160719064/memes/login.php"),
+        body: {'user_name': _user_name, 'user_password': _user_password});
 
     if (response.statusCode == 200) {
       Map json = jsonDecode(response.body);
       if (json['result'] == 'success') {
         final prefs = await SharedPreferences.getInstance();
-        prefs.setString("user_id", _user_id);
-        prefs.setString("user_name", json['user_name']);
+        prefs.setString("user_id", json['user_id'].toString());
+        prefs.setString("user_name", _user_name);
         main();
       } else {
         setState(() {
@@ -81,7 +82,7 @@ class _LoginState extends State {
                     padding: const EdgeInsets.all(10),
                     child: TextField(
                       onChanged: (v) {
-                        _user_id = v;
+                        _user_name = v;
                       },
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
