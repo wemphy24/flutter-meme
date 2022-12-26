@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, unnecessary_new, prefer_final_fields, sized_box_for_whitespace, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
+import 'package:meme_app/pages/creatememe.dart';
 import 'package:meme_app/pages/detailmeme.dart';
 import 'package:meme_app/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -87,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
             title: new Text("Home"),
             leading: new Icon(Icons.inbox),
             onTap: () {
+              Navigator.pop(context);
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Home()));
             },
@@ -95,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
             title: new Text("My Creations"),
             leading: new Icon(Icons.mood),
             onTap: () {
+              Navigator.pop(context);
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => MyCreations()));
             },
@@ -103,6 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
             title: new Text("Leaderboard"),
             leading: new Icon(Icons.leaderboard),
             onTap: () {
+              Navigator.pop(context);
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Leaderboard()));
             },
@@ -157,7 +161,9 @@ class _MyHomePageState extends State<MyHomePage> {
   FloatingActionButton myFAB() {
     return FloatingActionButton(
       onPressed: () {
-        Navigator.pushNamed(context, "creatememe");
+        Navigator.pop(context);
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => CreateMeme()));
       },
       tooltip: 'Increment',
       child: Icon(Icons.add),
