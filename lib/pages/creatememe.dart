@@ -48,7 +48,7 @@ class _CreateMemeState extends State<CreateMeme> {
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Top Text',
-                        hintText: 'Top Text'),
+                        hintText: 'Top Text Mas'),
                   ),
                 ),
                 Container(
