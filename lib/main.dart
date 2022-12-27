@@ -161,7 +161,6 @@ class _MyHomePageState extends State<MyHomePage> {
   FloatingActionButton myFAB() {
     return FloatingActionButton(
       onPressed: () {
-        Navigator.pop(context);
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => CreateMeme()));
       },
