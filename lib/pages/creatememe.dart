@@ -74,16 +74,6 @@ class _CreateMemeState extends State<CreateMeme> {
                             style: Theme.of(context).textTheme.headline4, //style blm di atur font meme
                           ),
                         )
-                        
-                  //     Positioned(
-                  //       top: 10,
-                  //       child:  Center(
-                  // child:Text("Bottom Text")),
-                  //     ),
-                  //     Positioned(
-                  //       top: 195,
-                  //       child: Text("Bottom Text"),
-                  //     ),
                     ],)]
                   )
                 ),
@@ -94,7 +84,6 @@ class _CreateMemeState extends State<CreateMeme> {
                       setState(() {
                         _url = v;
                       });
-                      // _url = v;
                     },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -102,7 +91,7 @@ class _CreateMemeState extends State<CreateMeme> {
                       hintText: 'Masukkan URL Valid'),
                     validator: (value) {
                       if (value == null || !Uri.parse(value).isAbsolute) {
-                        return 'alamat homepage salah';
+                        return 'url salah';
                       }
                       return null;
                     },
