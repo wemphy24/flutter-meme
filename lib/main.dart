@@ -51,7 +51,6 @@ class MyApp extends StatelessWidget {
         'mycreations': (context) => MyCreations(),
         'leaderboard': (context) => Leaderboard(),
         'settings': (context) => Settings(),
-        'detailmeme': (context) => DetailMeme(),
       },
       theme: ThemeData(
         primarySwatch: Colors.purple,

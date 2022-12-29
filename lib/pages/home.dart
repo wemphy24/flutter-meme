@@ -54,54 +54,6 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Card myCard() {
-    return Card(
-        elevation: 4.0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        margin: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Container(
-              height: 200.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                image: DecorationImage(
-                  image: NetworkImage(
-                      'https://top5kythu.com/wp-content/uploads/Rose-blackpink-1.png'),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      color: Colors.red,
-                      icon: Icon(Icons.favorite),
-                      onPressed: () {
-                        // ...
-                      },
-                    ),
-                    Text("200 likes")
-                  ],
-                ),
-                Container(
-                    child: IconButton(
-                  icon: Icon(Icons.message),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => DetailMeme()));
-                  },
-                )),
-              ],
-            )
-          ],
-        ));
-  }
-
   @override
   void initState() {
     super.initState();
@@ -151,7 +103,7 @@ class _HomeState extends State<Home> {
           child: Column(
             children: [
               Container(
-                height: 200.0,
+                height: 250.0,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   image: DecorationImage(
@@ -161,6 +113,30 @@ class _HomeState extends State<Home> {
                   ),
                   borderRadius: BorderRadius.circular(12),
                 ),
+                child: Stack(children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Center(
+                        child: Text(
+                          lm[index].top_text,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4, //style blm di atur font meme
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          lm[index].bottom_text,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4, //style blm di atur font meme
+                        ),
+                      )
+                    ],
+                  )
+                ])            
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -182,7 +158,7 @@ class _HomeState extends State<Home> {
                     icon: Icon(Icons.message),
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => DetailMeme()));
+                          MaterialPageRoute(builder: (context) => DetailMeme(memeID: lm[index].id)));
                     },
                   )),
                 ],

@@ -1,18 +1,60 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:http/http.dart' as http;
+import 'package:meme_app/class/memes.dart';
+import 'package:meme_app/main.dart';
+
 
 class DetailMeme extends StatefulWidget {
-  const DetailMeme({Key? key}) : super(key: key);
+  int memeID;
+  DetailMeme({super.key, required this.memeID});
 
   @override
   State<DetailMeme> createState() => _DetailMemeState();
 }
 
 class _DetailMemeState extends State<DetailMeme> {
-  Card myCard() {
+  Memes? _lm;
+
+  final _formKey = GlobalKey<FormState>();
+  String _comment = "";
+
+  Future<String> fetchData() async {
+    final response = await http.post(
+        Uri.parse(
+            "https://ubaya.fun/flutter/160719064/memes/detail_meme.php"),
+        body: {'id': widget.memeID.toString()});
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to read API');
+    }
+  }
+
+  bacaData() {
+    fetchData().then((value) {
+      Map json = jsonDecode(value);
+      _lm = Memes.fromJson(json['data']);
+      setState(() {});
+    });
+  }
+
+  Future onGoBack(dynamic value) async {
+    //	 print("masuk goback");
+    setState(() {
+      bacaData();
+    });
+  }
+
+  Widget myCard() {
+    if(_lm == null){
+      return const CircularProgressIndicator();
+    }
     return Card(
         elevation: 4.0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -20,16 +62,39 @@ class _DetailMemeState extends State<DetailMeme> {
         child: Column(
           children: [
             Container(
-              height: 200.0,
+              height: 250.0,
               decoration: BoxDecoration(
                 color: Colors.white,
                 image: DecorationImage(
-                  image: NetworkImage(
-                      'https://top5kythu.com/wp-content/uploads/Rose-blackpink-1.png'),
+                  image: NetworkImage(_lm!.url),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
+              child: Stack(children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Center(
+                        child: Text(
+                          _lm!.top_text,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4, //style blm di atur font meme
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          _lm!.bottom_text,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4, //style blm di atur font meme
+                        ),
+                      )
+                    ],
+                  )
+                ])
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +117,10 @@ class _DetailMemeState extends State<DetailMeme> {
         ));
   }
 
-  Card commentCard() {
+  Widget commentCard() {
+    if (_lm == null) {
+      return const CircularProgressIndicator();
+    }
     return Card(
       color: Colors.grey[200],
       elevation: 4.0,
@@ -60,59 +128,74 @@ class _DetailMemeState extends State<DetailMeme> {
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Padding(
         padding: const EdgeInsets.all(5),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Nurleila",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                  ),
-                  Text("2 Jan 2022",
-                      style: TextStyle(
-                        fontSize: 12,
-                      )),
-                ]),
-          ),
-          Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text("So beautiful!"))
-        ]),
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: _lm?.comments?.length,
+          itemBuilder: (BuildContext ctxt, int index) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _lm!.comments?[index]['username'],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                      Text(
+                        (_lm!.comments?[index]['date']).toString(),
+                        style: TextStyle(
+                          fontSize: 12,
+                        )),
+                    ]),
+              ),
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(_lm!.comments?[index]['comment']))
+            ]);
+          }
+        )
       ),
     );
   }
 
   @override
+  void initState() {
+    super.initState();
+    bacaData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context),
-          ),
-          title: Text("Meme Detail"),
-          centerTitle: true,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
         ),
-        body: SingleChildScrollView(
-            padding: EdgeInsets.all(8),
-            child: Column(
-              children: [
-                myCard(),
-                commentCard(),
-                commentCard(),
-              ],
-            )),
-        bottomNavigationBar: Container(
-          margin: EdgeInsets.all(10),
-          child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+        title: Text("Meme Detail"),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            children: [
+              myCard(),
+              commentCard(),
+            ],
+          )),
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.all(10),
+        child:  Form(
+          key: _formKey,
+          child:Row(mainAxisAlignment: MainAxisAlignment.end, children: [
             // First child is enter comment text input
             Expanded(
-              child: TextField(
+              child: TextFormField(
                 decoration: InputDecoration(
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
@@ -120,14 +203,48 @@ class _DetailMemeState extends State<DetailMeme> {
                   fillColor: Colors.white,
                   filled: true,
                 ),
+                onChanged: (value) {
+                  _comment=value;
+                },
               ),
             ),
             IconButton(
               icon: Icon(Icons.send),
               // iconSize: 20.0,
-              onPressed: () {},
+              onPressed: () {
+                if (_formKey.currentState != null &&
+                  !_formKey.currentState!.validate()) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Harap Isian diperbaiki')));
+                } else {
+                  sendComment();
+                }
+              },
             )
           ]),
-        ));
+        )
+      )
+    );
+  }
+
+  void sendComment() async {
+    final response = await http.post(
+        Uri.parse("https://ubaya.fun/flutter/160719064/memes/new_comment.php"),
+        body: {
+          'meme_id': widget.memeID,
+          'users_id': active_user,
+          'comment': _comment.toString()
+        });
+    if (response.statusCode == 200) {
+      Map json = jsonDecode(response.body);
+      if (json['result'] == 'success') {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Sukses Menambah Data')));
+        _comment="";
+      }
+    } else {
+      throw Exception('Failed to read API');
+    }
   }
 }
