@@ -12,6 +12,10 @@ import 'pages/mycreations.dart';
 import 'pages/settings.dart';
 
 String active_user = "";
+String user_name = "";
+String first_name = "";
+String last_name = "";
+// String avatar = "";
 final List<Widget> _screens = [Home(), MyCreations(), Settings()];
 int _current_index = 0;
 
@@ -70,7 +74,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // int _counter = 0;
+  void savedfNamelName() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      first_name = prefs.getString('fname') ?? "";
+      user_name = prefs.getString('user_name') ?? "";
+      last_name = prefs.getString('lname') ?? "";
+      // avatar = prefs.getString('ava') ?? "";
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    savedfNamelName();
+  }
 
   Drawer myDrawer() {
     return Drawer(
@@ -114,7 +132,10 @@ class _MyHomePageState extends State<MyHomePage> {
             title: new Text("Settings"),
             leading: new Icon(Icons.settings),
             onTap: () {
-              Navigator.popAndPushNamed(context, "settings");
+              // Navigator.popAndPushNamed(context, "settings");Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Settings()));
             },
           ),
           Divider(),

@@ -28,11 +28,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State {
-  String _user_id = "";
-  String _user_name="";
+  String _user_name = "";
   String _user_password = "";
   String error_login = "";
-  
+
   void doLogin() async {
     final response = await http.post(
         Uri.parse("https://ubaya.fun/flutter/160719064/memes/login.php"),
@@ -44,6 +43,9 @@ class _LoginState extends State {
         final prefs = await SharedPreferences.getInstance();
         prefs.setString("user_id", json['user_id'].toString());
         prefs.setString("user_name", _user_name);
+        prefs.setString("fname", json['fname'].toString());
+        prefs.setString("lname", json['lname'].toString());
+        prefs.setString("ava", json['ava'].toString());
         main();
       } else {
         setState(() {

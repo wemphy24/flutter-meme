@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:meme_app/class/memes.dart';
 import 'package:meme_app/main.dart';
 
-
 class DetailMeme extends StatefulWidget {
   int memeID;
   DetailMeme({super.key, required this.memeID});
@@ -26,8 +25,7 @@ class _DetailMemeState extends State<DetailMeme> {
 
   Future<String> fetchData() async {
     final response = await http.post(
-        Uri.parse(
-            "https://ubaya.fun/flutter/160719064/memes/detail_meme.php"),
+        Uri.parse("https://ubaya.fun/flutter/160719064/memes/detail_meme.php"),
         body: {'id': widget.memeID.toString()});
     if (response.statusCode == 200) {
       return response.body;
@@ -52,7 +50,7 @@ class _DetailMemeState extends State<DetailMeme> {
   }
 
   Widget myCard() {
-    if(_lm == null){
+    if (_lm == null) {
       return const CircularProgressIndicator();
     }
     return Card(
@@ -62,16 +60,16 @@ class _DetailMemeState extends State<DetailMeme> {
         child: Column(
           children: [
             Container(
-              height: 250.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                image: DecorationImage(
-                  image: NetworkImage(_lm!.url),
-                  fit: BoxFit.cover,
+                height: 250.0,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  image: DecorationImage(
+                    image: NetworkImage(_lm!.url),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Stack(children: <Widget>[
+                child: Stack(children: <Widget>[
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,8 +92,7 @@ class _DetailMemeState extends State<DetailMeme> {
                       )
                     ],
                   )
-                ])
-            ),
+                ])),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -127,39 +124,37 @@ class _DetailMemeState extends State<DetailMeme> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: _lm?.comments?.length,
-          itemBuilder: (BuildContext ctxt, int index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: const EdgeInsets.all(5),
+          child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: _lm?.comments?.length,
+              itemBuilder: (BuildContext ctxt, int index) {
+                return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        _lm!.comments?[index]['username'],
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                _lm!.comments?[index]['username'],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Text((_lm!.comments?[index]['date']).toString(),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  )),
+                            ]),
                       ),
-                      Text(
-                        (_lm!.comments?[index]['date']).toString(),
-                        style: TextStyle(
-                          fontSize: 12,
-                        )),
-                    ]),
-              ),
-              Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(_lm!.comments?[index]['comment']))
-            ]);
-          }
-        )
-      ),
+                      Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(_lm!.comments?[index]['comment']))
+                    ]);
+              })),
     );
   }
 
@@ -172,59 +167,57 @@ class _DetailMemeState extends State<DetailMeme> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
+          title: Text("Meme Detail"),
+          centerTitle: true,
         ),
-        title: Text("Meme Detail"),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-          padding: EdgeInsets.all(8),
-          child: Column(
-            children: [
-              myCard(),
-              commentCard(),
-            ],
-          )),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.all(10),
-        child:  Form(
-          key: _formKey,
-          child:Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            // First child is enter comment text input
-            Expanded(
-              child: TextFormField(
-                decoration: InputDecoration(
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
-                  hintText: 'Write Comments',
-                  fillColor: Colors.white,
-                  filled: true,
+        body: SingleChildScrollView(
+            padding: EdgeInsets.all(8),
+            child: Column(
+              children: [
+                myCard(),
+                commentCard(),
+              ],
+            )),
+        bottomNavigationBar: Container(
+            margin: EdgeInsets.all(10),
+            child: Form(
+              key: _formKey,
+              child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                // First child is enter comment text input
+                Expanded(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
+                      hintText: 'Write Comments',
+                      fillColor: Colors.white,
+                      filled: true,
+                    ),
+                    onChanged: (value) {
+                      _comment = value;
+                    },
+                  ),
                 ),
-                onChanged: (value) {
-                  _comment=value;
-                },
-              ),
-            ),
-            IconButton(
-              icon: Icon(Icons.send),
-              // iconSize: 20.0,
-              onPressed: () {
-                if (_formKey.currentState != null &&
-                  !_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Harap Isian diperbaiki')));
-                } else {
-                  sendComment();
-                }
-              },
-            )
-          ]),
-        )
-      )
-    );
+                IconButton(
+                  icon: Icon(Icons.send),
+                  // iconSize: 20.0,
+                  onPressed: () {
+                    if (_formKey.currentState != null &&
+                        !_formKey.currentState!.validate()) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Harap Isian diperbaiki')));
+                    } else {
+                      sendComment();
+                    }
+                  },
+                )
+              ]),
+            )));
   }
 
   void sendComment() async {
@@ -241,7 +234,7 @@ class _DetailMemeState extends State<DetailMeme> {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Sukses Menambah Data')));
-        _comment="";
+        _comment = "";
       }
     } else {
       throw Exception('Failed to read API');
