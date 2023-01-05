@@ -16,16 +16,6 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   final _formKey = GlobalKey<FormState>();
-  Memes _dataMeme = Memes(
-    id: 0,
-    url: '',
-    top_text: '',
-    bottom_text: '',
-    date: '',
-    likes: 0,
-    user_id: 0,
-  );
-
   TextEditingController _fnameController = TextEditingController();
   TextEditingController _lnameController = TextEditingController();
 
@@ -43,15 +33,15 @@ class _SettingsState extends State<Settings> {
         body: {
           'first_name': first_name,
           'last_name': last_name,
-          'user_id': active_user.toString()
+          'user_id': active_user
         });
     if (response.statusCode == 200) {
-      print(response.body);
+      // print(response.body);
       Map json = jsonDecode(response.body);
       if (json['result'] == 'success') {
         if (!mounted) return;
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Sukses mengubah Data')));
+            .showSnackBar(SnackBar(content: Text('Sukses Mengubah Data')));
       }
     } else {
       throw Exception('Failed to read API');
