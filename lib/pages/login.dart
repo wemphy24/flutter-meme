@@ -88,8 +88,8 @@ class _LoginState extends State {
                       },
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Email',
-                          hintText: 'Masukkan Email Yang Valid'),
+                          labelText: 'Username',
+                          hintText: 'Masukkan Username Yang Valid'),
                     ),
                   ),
                   Padding(

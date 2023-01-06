@@ -1,10 +1,13 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, sort_child_properties_last, sized_box_for_whitespace, unused_field, prefer_final_fields, prefer_const_constructors_in_immutables
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:meme_app/class/memes.dart';
 import 'package:http/http.dart' as http;
+import 'package:meme_app/class/users.dart';
 import 'package:meme_app/main.dart';
 import 'dart:convert';
 
@@ -15,9 +18,30 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  Users? _du;
+
   final _formKey = GlobalKey<FormState>();
   TextEditingController _fnameController = TextEditingController();
   TextEditingController _lnameController = TextEditingController();
+
+  // Future<String> fetchData() async {
+  //   final response = await http.post(
+  //       Uri.parse("https://ubaya.fun/flutter/160719064/memes/detail_user.php"),
+  //       body: {'id': active_user});
+  //   if (response.statusCode == 200) {
+  //     return response.body;
+  //   } else {
+  //     throw Exception('Failed to read API');
+  //   }
+  // }
+
+  // readData() {
+  //   fetchData().then((value) {
+  //     Map json = jsonDecode(value);
+  //     _du = Users.fromJson(json['data']);
+  //     setState(() {});
+  //   });
+  // }
 
   void getfNamelName() async {
     setState(() {
@@ -51,6 +75,7 @@ class _SettingsState extends State<Settings> {
   @override
   void initState() {
     super.initState();
+    // readData();
     getfNamelName();
   }
 
