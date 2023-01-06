@@ -102,7 +102,10 @@ class _DetailMemeState extends State<DetailMeme> {
                       color: Colors.red,
                       icon: Icon(Icons.favorite),
                       onPressed: () {
-                        // sendLike();
+                        setState(() {
+                          _lm!.likes++;
+                          sendLike();
+                        });
                       },
                     ),
                     Text(_lm!.likes.toString())
@@ -241,22 +244,22 @@ class _DetailMemeState extends State<DetailMeme> {
     }
   }
 
-  // void sendLike() async {
-  //   final response = await http.post(
-  //       Uri.parse("https://ubaya.fun/flutter/160719064/memes/update_like.php"),
-  //       body: {
-  //         'likes': _lm!.likes + 1,
-  //         'meme_id': active_user,
-  //       });
-  //   if (response.statusCode == 200) {
-  //     Map json = jsonDecode(response.body);
-  //     if (json['result'] == 'success') {
-  //       if (!mounted) return;
-  //       ScaffoldMessenger.of(context)
-  //           .showSnackBar(const SnackBar(content: Text('Like Sukses')));
-  //     }
-  //   } else {
-  //     throw Exception('Failed to read API');
-  //   }
-  // }
+  void sendLike() async {
+    final response = await http.post(
+        Uri.parse("https://ubaya.fun/flutter/160719064/memes/update_like.php"),
+        body: {
+          'likes': _lm!.likes.toString(),
+          'meme_id': widget.memeID.toString(),
+        });
+    if (response.statusCode == 200) {
+      Map json = jsonDecode(response.body);
+      if (json['result'] == 'success') {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Like Sukses')));
+      }
+    } else {
+      throw Exception('Failed to read API');
+    }
+  }
 }
