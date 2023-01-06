@@ -225,7 +225,6 @@ class _DetailMemeState extends State<DetailMeme> {
                 ),
                 IconButton(
                   icon: Icon(Icons.send),
-                  // iconSize: 20.0,
                   onPressed: () {
                     if (_formKey.currentState != null &&
                         !_formKey.currentState!.validate()) {
