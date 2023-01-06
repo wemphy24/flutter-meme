@@ -64,6 +64,11 @@ flutter:
   assets:
     - assets/images/memeface.png
     - assets/images/memegambar.png
+  
+  fonts:
+    - family: Impact
+      fonts:
+        - asset: assets/fonts/Impact.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

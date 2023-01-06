@@ -77,17 +77,33 @@ class _DetailMemeState extends State<DetailMeme> {
                       Center(
                         child: Text(
                           _lm!.top_text,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4, //style blm di atur font meme
+                          style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.black,
+                              shadows: const [
+                                Shadow(
+                                    color: Colors.white,
+                                    offset: Offset(1, 2),
+                                    blurRadius: 2)
+                              ],
+                              fontFamily:
+                                  'Impact'), //style blm di atur font meme
                         ),
                       ),
                       Center(
                         child: Text(
                           _lm!.bottom_text,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4, //style blm di atur font meme
+                          style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.black,
+                              shadows: const [
+                                Shadow(
+                                    color: Colors.white,
+                                    offset: Offset(1, 2),
+                                    blurRadius: 2)
+                              ],
+                              fontFamily:
+                                  'Impact'), //style blm di atur font meme
                         ),
                       )
                     ],

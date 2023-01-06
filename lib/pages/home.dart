@@ -104,49 +104,68 @@ class _HomeState extends State<Home> {
       lm.add(m);
     }
     return ListView.builder(
-        itemCount: lm.length,
-        itemBuilder: (BuildContext ctxt, int index) {
-          return Card(
-              elevation: 4.0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              margin: EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  Container(
-                      height: 250.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        image: DecorationImage(
-                          image: NetworkImage(lm[index].url),
-                          fit: BoxFit.cover,
+      itemCount: lm.length,
+      itemBuilder: (BuildContext ctxt, int index) {
+        return Card(
+          elevation: 4.0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          margin: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Container(
+                height: 250.0,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  image: DecorationImage(
+                    image: NetworkImage(
+                        lm[index].url),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Stack(children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Center(
+                        child: Text(
+                          lm[index].top_text,
+                          style: TextStyle(
+                                    fontSize: 30,
+                                    color: Colors.black,
+                                    shadows: const [
+                                      Shadow(
+                                          color: Colors.white,
+                                          offset: Offset(1, 2),
+                                          blurRadius: 2)
+                                    ],
+                                    fontFamily: 'Impact'), //style blm di atur font meme
                         ),
-                        borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Stack(children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Center(
-                              child: Text(
-                                lm[index].top_text,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline4, //style blm di atur font meme
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                lm[index].bottom_text,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline4, //style blm di atur font meme
-                              ),
-                            )
-                          ],
-                        )
-                      ])),
+                      Center(
+                        child: Text(
+                          lm[index].bottom_text,
+                          style: TextStyle(
+                                    fontSize: 30,
+                                    color: Colors.black,
+                                    shadows: const [
+                                      Shadow(
+                                          color: Colors.white,
+                                          offset: Offset(1, 2),
+                                          blurRadius: 2)
+                                    ],
+                                    fontFamily:
+                                        'Impact'), //style blm di atur font meme
+                        ),
+                      )
+                    ],
+                  )
+                ])            
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
