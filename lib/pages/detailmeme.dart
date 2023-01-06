@@ -99,12 +99,13 @@ class _DetailMemeState extends State<DetailMeme> {
                 Row(
                   children: [
                     IconButton(
-                      color: Colors.red,
+                      color: _lm!.likes != 0 ? Colors.red : Colors.grey[200],
                       icon: Icon(Icons.favorite),
                       onPressed: () {
                         setState(() {
-                          _lm!.likes++;
+                          // _lm!.likes++;
                           sendLike();
+                          bacaData();
                         });
                       },
                     ),
@@ -248,7 +249,7 @@ class _DetailMemeState extends State<DetailMeme> {
     final response = await http.post(
         Uri.parse("https://ubaya.fun/flutter/160719064/memes/update_like.php"),
         body: {
-          'likes': _lm!.likes.toString(),
+          // 'likes': _lm!.likes.toString(),
           'meme_id': widget.memeID.toString(),
         });
     if (response.statusCode == 200) {
