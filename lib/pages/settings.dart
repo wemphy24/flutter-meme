@@ -18,45 +18,57 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  Users? _du;
+  // Users? _du;
 
   final _formKey = GlobalKey<FormState>();
+  Users du = Users(
+    id: 0,
+    username: '',
+    first_name: '',
+    last_name: '',
+    registration_date: '',
+    avatar: '',
+  );
+
   TextEditingController _fnameController = TextEditingController();
   TextEditingController _lnameController = TextEditingController();
 
-  // Future<String> fetchData() async {
-  //   final response = await http.post(
-  //       Uri.parse("https://ubaya.fun/flutter/160719064/memes/detail_user.php"),
-  //       body: {'id': active_user});
-  //   if (response.statusCode == 200) {
-  //     return response.body;
-  //   } else {
-  //     throw Exception('Failed to read API');
-  //   }
-  // }
+  Future<String> fetchData() async {
+    final response = await http.post(
+        Uri.parse("https://ubaya.fun/flutter/160719064/memes/detail_user.php"),
+        body: {'id': active_user});
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to read API');
+    }
+  }
 
-  // readData() {
-  //   fetchData().then((value) {
-  //     Map json = jsonDecode(value);
-  //     _du = Users.fromJson(json['data']);
-  //     setState(() {});
-  //   });
-  // }
-
-  void getfNamelName() async {
-    setState(() {
-      _fnameController.text = first_name;
-      _lnameController.text = last_name;
+  readData() {
+    fetchData().then((value) {
+      Map json = jsonDecode(value);
+      du = Users.fromJson(json['data']);
+      setState(() {
+        _fnameController.text = du.first_name;
+        _lnameController.text = du.last_name;
+      });
     });
   }
+
+  // void getfNamelName() async {
+  //   setState(() {
+  //     _fnameController.text = first_name;
+  //     _lnameController.text = last_name;
+  //   });
+  // }
 
   void submit() async {
     final response = await http.post(
         Uri.parse(
             "https://ubaya.fun/flutter/160719064/memes/update_profile.php"),
         body: {
-          'first_name': first_name,
-          'last_name': last_name,
+          'first_name': du.first_name,
+          'last_name': du.last_name,
           'user_id': active_user
         });
     if (response.statusCode == 200) {
@@ -66,6 +78,9 @@ class _SettingsState extends State<Settings> {
         if (!mounted) return;
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Sukses Mengubah Data')));
+            setState(() {
+              readData();
+            });
       }
     } else {
       throw Exception('Failed to read API');
@@ -75,8 +90,9 @@ class _SettingsState extends State<Settings> {
   @override
   void initState() {
     super.initState();
-    // readData();
-    getfNamelName();
+    readData();
+    // getfNamelName();
+
   }
 
   @override
@@ -92,8 +108,7 @@ class _SettingsState extends State<Settings> {
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: NetworkImage(
-                    "https://assets.promediateknologi.com/crop/33x301:541x953/x/photo/2022/04/07/3381014888.png"),
+                image: NetworkImage(du.avatar),
                 fit: BoxFit.cover,
               )),
         ),
@@ -103,13 +118,13 @@ class _SettingsState extends State<Settings> {
           child: Column(
             // ignore: prefer_const_literals_to_create_immutables
             children: [
-              Text('$first_name $last_name',
+              Text(du.first_name +" "+ du.last_name,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18.0,
                   )),
-              Text('Active since Sept 2022'),
-              Text(user_name),
+              Text('Active since '+ du.registration_date),//ambil bulan dan tahunnya aja 
+              Text(du.username),
               // ignore: prefer_const_literals_to_create_immutables
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -120,11 +135,10 @@ class _SettingsState extends State<Settings> {
                       margin: EdgeInsets.only(top: 15),
                       child: TextFormField(
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'First Name',
-                              hintText: 'First Name'),
+                              // border: OutlineInputBorder(),
+                              labelText: 'First Name',),
                           onChanged: (value) {
-                            first_name = value;
+                            du.first_name = value;
                           },
                           controller: _fnameController),
                     ),
@@ -132,11 +146,10 @@ class _SettingsState extends State<Settings> {
                       margin: EdgeInsets.symmetric(vertical: 10),
                       child: TextFormField(
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Last Name',
-                              hintText: 'Last Name'),
+                              // border: OutlineInputBorder(),
+                              labelText: 'Last Name',),
                           onChanged: (value) {
-                            last_name = value;
+                            du.last_name = value;
                           },
                           controller: _lnameController),
                     ),
