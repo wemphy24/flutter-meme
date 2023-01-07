@@ -1,10 +1,13 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, sort_child_properties_last, sized_box_for_whitespace, unused_field, prefer_final_fields, prefer_const_constructors_in_immutables
 
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:image/image.dart' as img;
+import 'package:image_picker/image_picker.dart';
 import 'package:meme_app/class/memes.dart';
 import 'package:http/http.dart' as http;
 import 'package:meme_app/class/users.dart';
@@ -12,6 +15,7 @@ import 'package:meme_app/main.dart';
 import 'dart:convert';
 
 import 'package:meme_app/pages/home.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Settings extends StatefulWidget {
   Settings({Key? key}) : super(key: key);
@@ -35,6 +39,9 @@ class _SettingsState extends State<Settings> {
 
   TextEditingController _fnameController = TextEditingController();
   TextEditingController _lnameController = TextEditingController();
+
+  File? _image;
+  File? _imageProses;
 
   Future<String> fetchData() async {
     final response = await http.post(
@@ -61,12 +68,84 @@ class _SettingsState extends State<Settings> {
     });
   }
 
-  // void getfNamelName() async {
-  //   setState(() {
-  //     _fnameController.text = first_name;
-  //     _lnameController.text = last_name;
-  //   });
-  // }
+  _imgGaleri() async {
+    final picker = ImagePicker();
+    final image = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 50,
+        maxHeight: 600,
+        maxWidth: 600);
+    if (image == null) return;
+    setState(() {
+      _image = File(image.path);
+      prosesFoto();
+    });
+  }
+
+  _imgKamera() async {
+    final picker = ImagePicker();
+    final image =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 20);
+    if (image == null) return;
+    setState(() {
+      _image = File(image.path);
+      prosesFoto();
+    });
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SafeArea(
+        child: Container(
+        color: Colors.white,
+        child: Wrap(
+          children: <Widget>[
+          ListTile(
+            tileColor: Colors.white,
+            leading: Icon(Icons.photo_library),
+            title: Text('Galeri'),
+            onTap: () {
+              _imgGaleri();
+              Navigator.of(context).pop();
+            }
+          ),
+          ListTile(
+            leading: Icon(Icons.photo_camera),
+            title: const Text('Kamera'),
+            onTap: () {
+              _imgKamera();
+              Navigator.of(context).pop();
+            },
+          ),
+          ],
+        ),
+        ),
+        );
+      }
+    );
+  }
+
+  void prosesFoto() {
+    Future<Directory?> extDir = getTemporaryDirectory();
+    extDir.then((value) {
+      String timestamp = DateTime.now().toString();
+      final String filePath = '${value?.path}/$timestamp.jpg';
+      _imageProses = File(filePath);
+      img.Image? temp = img.readJpg(_image!.readAsBytesSync());
+      img.Image temp2 = img.copyResize(temp!, width: 480, height: 640);
+      setState(() {
+        _imageProses?.writeAsBytesSync(img.writeJpg(temp2));
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    readData();
+  }
 
   void submit() async {
     final response = await http.post(
@@ -88,18 +167,28 @@ class _SettingsState extends State<Settings> {
         setState(() {
           readData();
         });
+        if (_imageProses == null) return;
+        List<int> imageBytes = _imageProses!.readAsBytesSync();
+        String base64Image = base64Encode(imageBytes);
+        final response2 = await http.post(
+            Uri.parse(
+                'https://ubaya.fun/flutter/160719064/memes/upload_avatar.php'),
+            body: {
+              'user_id': active_user,
+              'image': base64Image,
+            });
+        if (response2.statusCode == 200) {
+          if (!mounted) return;
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Sukses Mengubah Data')));
+        }
       }
     } else {
       throw Exception('Failed to read API');
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    readData();
-    // getfNamelName();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +224,11 @@ class _SettingsState extends State<Settings> {
         body: Center(
             child: Column(
           children: [
+            GestureDetector(
+                onTap: () {
+                  _showPicker(context);
+                }, 
+                child: 
             Container(
               margin: EdgeInsets.symmetric(vertical: 10),
               width: 100,
@@ -142,10 +236,10 @@ class _SettingsState extends State<Settings> {
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: NetworkImage(du.avatar),
+                    image: _imageProses!=null ? FileImage(_imageProses!): NetworkImage(du.avatar) as ImageProvider,
                     fit: BoxFit.cover,
                   )),
-            ),
+            ),),
             Container(
                 child: Form(
               key: _formKey,
