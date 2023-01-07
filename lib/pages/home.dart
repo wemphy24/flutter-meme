@@ -79,7 +79,7 @@ class _HomeState extends State<Home> {
             bacaData();
           }
         }
-      }else{
+      } else {
         final response = await http.post(
             Uri.parse(
                 "https://ubaya.fun/flutter/160719064/memes/update_like.php"),
@@ -93,34 +93,33 @@ class _HomeState extends State<Home> {
             if (!mounted) return;
             ScaffoldMessenger.of(context)
                 .showSnackBar(const SnackBar(content: Text('Like Sukses')));
-                bacaData();
+            bacaData();
           }
         }
       }
     } else {
       throw Exception('Failed to read API');
     }
-    
   }
 
-  void cancelLike(memeID) async {
-    final response = await http.post(
-        Uri.parse("https://ubaya.fun/flutter/160719064/memes/disslike.php"),
-        body: {
-          'meme_id': memeID.toString(),
-          'user_id': active_user,
-        });
-    if (response.statusCode == 200) {
-      Map json = jsonDecode(response.body);
-      if (json['result'] == 'success') {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Cancel Like Sukses')));
-      }
-    } else {
-      throw Exception('Failed to read API');
-    }
-  }
+  // void cancelLike(memeID) async {
+  //   final response = await http.post(
+  //       Uri.parse("https://ubaya.fun/flutter/160719064/memes/disslike.php"),
+  //       body: {
+  //         'meme_id': memeID.toString(),
+  //         'user_id': active_user,
+  //       });
+  //   if (response.statusCode == 200) {
+  //     Map json = jsonDecode(response.body);
+  //     if (json['result'] == 'success') {
+  //       if (!mounted) return;
+  //       ScaffoldMessenger.of(context)
+  //           .showSnackBar(const SnackBar(content: Text('Cancel Like Sukses')));
+  //     }
+  //   } else {
+  //     throw Exception('Failed to read API');
+  //   }
+  // }
 
   Drawer myDrawer() {
     return Drawer(
@@ -325,7 +324,6 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 // print(lm[index].id);
                                 sendLike(lm[index].id);
-                                
                               });
                             },
                           ),
