@@ -47,7 +47,6 @@ class _LeaderboardState extends State<Leaderboard> {
   void initState() {
     super.initState();
     bacaData();
-    // test
   }
 
   @override

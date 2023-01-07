@@ -2,7 +2,6 @@
 
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -24,7 +23,6 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  // Users? _du;
   bool? privacyChecked = false;
 
   final _formKey = GlobalKey<FormState>();
@@ -156,7 +154,6 @@ class _SettingsState extends State<Settings> {
           'user_id': active_user
         });
     if (response.statusCode == 200) {
-      // print(response.body);
       Map json = jsonDecode(response.body);
       if (json['result'] == 'success') {
         if (!mounted) return;
@@ -191,12 +188,6 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Setting"),
-          // leading: GestureDetector(
-          //   onTap: () {/* Write listener code here */},
-          //   child: Icon(
-          //     Icons.menu, // add custom icons also
-          //   ),
-          // ),
           actions: <Widget>[
             Padding(
                 padding: EdgeInsets.only(right: 20),
@@ -262,7 +253,6 @@ class _SettingsState extends State<Settings> {
                           margin: EdgeInsets.only(top: 15),
                           child: TextFormField(
                               decoration: InputDecoration(
-                                // border: OutlineInputBorder(),
                                 labelText: 'First Name',
                               ),
                               onChanged: (value) {
@@ -274,7 +264,6 @@ class _SettingsState extends State<Settings> {
                           margin: EdgeInsets.symmetric(vertical: 10),
                           child: TextFormField(
                               decoration: InputDecoration(
-                                // border: OutlineInputBorder(),
                                 labelText: 'Last Name',
                               ),
                               onChanged: (value) {

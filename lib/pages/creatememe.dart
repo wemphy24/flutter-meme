@@ -71,8 +71,7 @@ class _CreateMemeState extends State<CreateMeme> {
                                             offset: Offset(1, 2),
                                             blurRadius: 2)
                                       ],
-                                      fontFamily:
-                                          'Impact'), //style blm di atur font meme
+                                      fontFamily: 'Impact'),
                                 ),
                               ),
                               Center(
@@ -87,8 +86,7 @@ class _CreateMemeState extends State<CreateMeme> {
                                             offset: Offset(1, 2),
                                             blurRadius: 2)
                                       ],
-                                      fontFamily:
-                                          'Impact'), //style blm di atur font meme
+                                      fontFamily: 'Impact'),
                                 ),
                               )
                             ],

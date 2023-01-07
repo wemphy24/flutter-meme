@@ -43,12 +43,10 @@ class _CreateAccountState extends State<CreateAccount> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  // padding: const EdgeInsets.only(top: 10),
                   child: Text(
                     "Create Account",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  // margin: EdgeInsets.only(bottom: 100)
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 50),
@@ -130,9 +128,6 @@ class _CreateAccountState extends State<CreateAccount> {
                               border: OutlineInputBorder(),
                               labelText: 'Repeat Password',
                               hintText: 'Repeat Password'),
-                          // onChanged: (value) {
-                          //   _first_name = value;
-                          // },
                           validator: (value) {
                             if (value == null ||
                                 value.isEmpty ||

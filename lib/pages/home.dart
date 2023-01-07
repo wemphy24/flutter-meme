@@ -38,13 +38,13 @@ class _HomeState extends State<Home> {
   }
 
   bacaData() {
-    //membersihkan list sebelum fetch data
+    // membersihkan list sebelum fetch data
     memes.clear();
 
     Future<String> data = fetchData();
     data.then((value) {
       setState(() {
-        // mengolah JSON menjadi object Dart(POpMovie)
+        // mengolah JSON menjadi object Dart(PopMovie)
         Map json = jsonDecode(value);
         for (var meme in json['data']) {
           Memes mov = Memes.fromJson(meme);
@@ -102,25 +102,6 @@ class _HomeState extends State<Home> {
     }
   }
 
-  // void cancelLike(memeID) async {
-  //   final response = await http.post(
-  //       Uri.parse("https://ubaya.fun/flutter/160719064/memes/disslike.php"),
-  //       body: {
-  //         'meme_id': memeID.toString(),
-  //         'user_id': active_user,
-  //       });
-  //   if (response.statusCode == 200) {
-  //     Map json = jsonDecode(response.body);
-  //     if (json['result'] == 'success') {
-  //       if (!mounted) return;
-  //       ScaffoldMessenger.of(context)
-  //           .showSnackBar(const SnackBar(content: Text('Cancel Like Sukses')));
-  //     }
-  //   } else {
-  //     throw Exception('Failed to read API');
-  //   }
-  // }
-
   Drawer myDrawer() {
     return Drawer(
       elevation: 16.0,
@@ -154,14 +135,14 @@ class _HomeState extends State<Home> {
               )
             ],
           ),
-          BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Center(
-                child: Card(
-                  elevation: 10,
-                  color: Colors.black.withOpacity(0.5),
-                ),
-              )),
+          // BackdropFilter(
+          //     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          //     child: Center(
+          //       child: Card(
+          //         elevation: 10,
+          //         color: Colors.black.withOpacity(0.5),
+          //       ),
+          //     )),
 
           ListTile(
             title: new Text("Home"),
@@ -225,20 +206,18 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("Daily Meme Digest"),
       ),
-      body: ListView(padding: EdgeInsets.all(8), children: [
-        Container(
-            height: MediaQuery.of(context).size.height,
-            child: FutureBuilder(
-                future: fetchData(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    // return Text(snapshot.data.toString());
-                    return listMemes(snapshot.data.toString());
-                  } else {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                })),
-      ]),
+      body: Container(
+          height: MediaQuery.of(context).size.height,
+          child: FutureBuilder(
+              future: fetchData(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  // return Text(snapshot.data.toString());
+                  return listMemes(snapshot.data.toString());
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              })),
       drawer: myDrawer(),
     );
   }
@@ -287,8 +266,7 @@ class _HomeState extends State<Home> {
                                           offset: Offset(1, 2),
                                           blurRadius: 2)
                                     ],
-                                    fontFamily:
-                                        'Impact'), //style blm di atur font meme
+                                    fontFamily: 'Impact'),
                               ),
                             ),
                             Center(
@@ -303,8 +281,7 @@ class _HomeState extends State<Home> {
                                           offset: Offset(1, 2),
                                           blurRadius: 2)
                                     ],
-                                    fontFamily:
-                                        'Impact'), //style blm di atur font meme
+                                    fontFamily: 'Impact'),
                               ),
                             )
                           ],

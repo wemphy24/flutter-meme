@@ -85,8 +85,7 @@ class _DetailMemeState extends State<DetailMeme> {
                                     offset: Offset(1, 2),
                                     blurRadius: 2)
                               ],
-                              fontFamily:
-                                  'Impact'), //style blm di atur font meme
+                              fontFamily: 'Impact'),
                         ),
                       ),
                       Center(
@@ -101,8 +100,7 @@ class _DetailMemeState extends State<DetailMeme> {
                                     offset: Offset(1, 2),
                                     blurRadius: 2)
                               ],
-                              fontFamily:
-                                  'Impact'), //style blm di atur font meme
+                              fontFamily: 'Impact'),
                         ),
                       )
                     ],
@@ -148,7 +146,6 @@ class _DetailMemeState extends State<DetailMeme> {
             itemBuilder: (BuildContext ctxt, int index) {
               return Card(
                   color: Colors.grey[350],
-                  // elevation: 4.0,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -182,7 +179,6 @@ class _DetailMemeState extends State<DetailMeme> {
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 child: Text(_lm!.comments?[index]['comment']))
                           ])));
-              ;
             }));
   }
 
