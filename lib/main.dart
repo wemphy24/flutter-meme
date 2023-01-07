@@ -14,7 +14,7 @@ String active_user = "";
 String user_name = "";
 String first_name = "";
 String last_name = "";
-// String avatar = "";
+String avatar = "";
 final List<Widget> _screens = [
   Home(),
   Leaderboard(),
@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
       first_name = prefs.getString('fname') ?? "";
       user_name = prefs.getString('user_name') ?? "";
       last_name = prefs.getString('lname') ?? "";
-      // avatar = prefs.getString('ava') ?? "";
+      avatar = prefs.getString('ava') ?? "";
     });
   }
 

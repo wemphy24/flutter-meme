@@ -103,12 +103,16 @@ class _LeaderboardState extends State<Leaderboard> {
                                 fit: BoxFit.cover,
                               )),
                         ),
-                        Text(lr[index].first_name + lr[index].last_name)
+                        Text(lr[index].privacy != 1
+                            ? lr[index].first_name + lr[index].last_name
+                            : "${(lr[index].first_name + lr[index].last_name).substring(0, 3)}${(lr[index].first_name + lr[index].last_name).substring(3).replaceAll(RegExp(r'[a-zA-Z]'), '*')}")
                       ],
                     ),
                     Row(children: [
                       Icon(Icons.favorite, color: Colors.red),
-                      Text(lr[index].total_likes),
+                      Container(
+                          margin: EdgeInsets.only(left: 5),
+                          child: Text(lr[index].total_likes)),
                     ])
                   ]),
             )

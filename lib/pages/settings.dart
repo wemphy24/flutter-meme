@@ -291,6 +291,8 @@ class _SettingsState extends State<Settings> {
                               privacyChecked = value!;
                               if (privacyChecked == true) {
                                 du.privacy = 1;
+                              } else {
+                                du.privacy = 0;
                               }
                             });
                           },

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
 
 import 'dart:convert';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -78,34 +79,43 @@ class _HomeState extends State<Home> {
       elevation: 16.0,
       child: Column(
         children: <Widget>[
-          Container(
-            child: UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                          'https://assets.promediateknologi.com/crop/0x0:0x0/0x0/webp/photo/2022/11/05/2185194330.jpg'))),
-              accountName: Text("$first_name $last_name"),
-              accountEmail: Text(user_name),
-              currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage("https://i.pravatar.cc/150")),
-              otherAccountsPictures: [
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.orange, shape: BoxShape.circle),
-                  child: IconButton(
-                    color: Colors.white,
-                    icon: Icon(Icons.logout),
-                    onPressed: () {
-                      setState(() {
-                        doLogout();
-                      });
-                    },
-                  ),
-                )
-              ],
-            ),
+          UserAccountsDrawerHeader(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                        'https://assets.promediateknologi.com/crop/0x0:0x0/0x0/webp/photo/2022/11/05/2185194330.jpg'),
+                    colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.5), BlendMode.darken))),
+            accountName: Text("$first_name $last_name"),
+            accountEmail: Text(user_name),
+            currentAccountPicture:
+                CircleAvatar(backgroundImage: NetworkImage(avatar)),
+            otherAccountsPictures: [
+              Container(
+                decoration:
+                    BoxDecoration(color: Colors.orange, shape: BoxShape.circle),
+                child: IconButton(
+                  color: Colors.white,
+                  icon: Icon(Icons.logout),
+                  onPressed: () {
+                    setState(() {
+                      doLogout();
+                    });
+                  },
+                ),
+              )
+            ],
           ),
+          BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Center(
+                child: Card(
+                  elevation: 10,
+                  color: Colors.black.withOpacity(0.5),
+                ),
+              )),
+
           ListTile(
             title: new Text("Home"),
             leading: new Icon(Icons.inbox),
