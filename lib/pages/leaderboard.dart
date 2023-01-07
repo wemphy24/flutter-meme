@@ -3,15 +3,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:meme_app/class/users.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Leaderboard extends StatefulWidget {
-  const Leaderboard({Key? key}) : super(key: key);
-
+  Leaderboard({Key? key}) : super(key: key);
   @override
   State<Leaderboard> createState() => _LeaderboardState();
 }
 
 class _LeaderboardState extends State<Leaderboard> {
+  List<Users> users = [];
+
+  Future<String> fetchData() async {
+    final response = await http.post(
+      Uri.parse('https://ubaya.fun/flutter/160719064/memes/get_allusers.php'),
+    );
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to read API');
+    }
+  }
+
+  bacaData() {
+    users.clear();
+    Future<String> data = fetchData();
+    data.then((value) {
+      setState(() {
+        Map json = jsonDecode(value);
+        for (var user in json['data']) {
+          Users mov = Users.fromJson(user);
+          users.add(mov);
+        }
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // bacaData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

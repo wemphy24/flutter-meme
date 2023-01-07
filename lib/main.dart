@@ -16,7 +16,12 @@ String user_name = "";
 String first_name = "";
 String last_name = "";
 // String avatar = "";
-final List<Widget> _screens = [Home(), MyCreations(), Settings()];
+final List<Widget> _screens = [
+  Home(),
+  Leaderboard(),
+  MyCreations(),
+  Settings()
+];
 int _current_index = 0;
 
 Future<String> checkUser() async {
@@ -89,67 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
     savedfNamelName();
   }
 
-  Drawer myDrawer() {
-    return Drawer(
-      elevation: 16.0,
-      child: Column(
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text(active_user),
-            accountEmail: Text("xyz@gmail.com"),
-            currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage("https://i.pravatar.cc/150")),
-          ),
-          ListTile(
-            title: new Text("Home"),
-            leading: new Icon(Icons.inbox),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Home()));
-            },
-          ),
-          ListTile(
-            title: new Text("My Creations"),
-            leading: new Icon(Icons.mood),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => MyCreations()));
-            },
-          ),
-          ListTile(
-            title: new Text("Leaderboard"),
-            leading: new Icon(Icons.leaderboard),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Leaderboard()));
-            },
-          ),
-          ListTile(
-            title: new Text("Settings"),
-            leading: new Icon(Icons.settings),
-            onTap: () {
-              // Navigator.popAndPushNamed(context, "settings");Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Settings()));
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: new Text("Logout"),
-            leading: new Icon(Icons.logout),
-            onTap: () {
-              doLogout();
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
   BottomNavigationBar myBottomNavBar() {
     return BottomNavigationBar(
       currentIndex: _current_index,
@@ -159,6 +103,10 @@ class _MyHomePageState extends State<MyHomePage> {
         BottomNavigationBarItem(
           label: "Home",
           icon: Icon(Icons.home),
+        ),
+        BottomNavigationBarItem(
+          label: "Leaderboard",
+          icon: Icon(Icons.leaderboard),
         ),
         BottomNavigationBarItem(
           label: "My Creation",
@@ -191,12 +139,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      // appBar: AppBar(
+      //   title: Text(widget.title),
+      // ),
       body: _screens[_current_index],
       floatingActionButton: myFAB(),
-      drawer: myDrawer(),
+      // drawer: myDrawer(),
       bottomNavigationBar: myBottomNavBar(),
     );
   }

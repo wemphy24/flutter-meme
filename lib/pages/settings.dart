@@ -19,6 +19,7 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   // Users? _du;
+  bool? check2 = false;
 
   final _formKey = GlobalKey<FormState>();
   Users du = Users(
@@ -78,9 +79,9 @@ class _SettingsState extends State<Settings> {
         if (!mounted) return;
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Sukses Mengubah Data')));
-            setState(() {
-              readData();
-            });
+        setState(() {
+          readData();
+        });
       }
     } else {
       throw Exception('Failed to read API');
@@ -92,7 +93,6 @@ class _SettingsState extends State<Settings> {
     super.initState();
     readData();
     // getfNamelName();
-
   }
 
   @override
@@ -118,12 +118,13 @@ class _SettingsState extends State<Settings> {
           child: Column(
             // ignore: prefer_const_literals_to_create_immutables
             children: [
-              Text(du.first_name +" "+ du.last_name,
+              Text(du.first_name + " " + du.last_name,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18.0,
                   )),
-              Text('Active since '+ du.registration_date),//ambil bulan dan tahunnya aja 
+              Text('Active since ' +
+                  du.registration_date), //ambil bulan dan tahunnya aja
               Text(du.username),
               // ignore: prefer_const_literals_to_create_immutables
               Padding(
@@ -135,8 +136,9 @@ class _SettingsState extends State<Settings> {
                       margin: EdgeInsets.only(top: 15),
                       child: TextFormField(
                           decoration: InputDecoration(
-                              // border: OutlineInputBorder(),
-                              labelText: 'First Name',),
+                            // border: OutlineInputBorder(),
+                            labelText: 'First Name',
+                          ),
                           onChanged: (value) {
                             du.first_name = value;
                           },
@@ -146,13 +148,25 @@ class _SettingsState extends State<Settings> {
                       margin: EdgeInsets.symmetric(vertical: 10),
                       child: TextFormField(
                           decoration: InputDecoration(
-                              // border: OutlineInputBorder(),
-                              labelText: 'Last Name',),
+                            // border: OutlineInputBorder(),
+                            labelText: 'Last Name',
+                          ),
                           onChanged: (value) {
                             du.last_name = value;
                           },
                           controller: _lnameController),
                     ),
+                    Container(
+                        child: CheckboxListTile(
+                      value: check2,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          check2 = value;
+                        });
+                      },
+                      title: Text("Hide my name"),
+                    ))
                   ],
                 ),
               ),

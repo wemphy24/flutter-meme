@@ -6,8 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:meme_app/class/memes.dart';
+import 'package:meme_app/main.dart';
 import 'package:meme_app/pages/detailmeme.dart';
 import 'package:http/http.dart' as http;
+import 'package:meme_app/pages/leaderboard.dart';
+import 'package:meme_app/pages/mycreations.dart';
+import 'package:meme_app/pages/settings.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -70,6 +74,67 @@ class _HomeState extends State<Home> {
     }
   }
 
+  Drawer myDrawer() {
+    return Drawer(
+      elevation: 16.0,
+      child: Column(
+        children: <Widget>[
+          UserAccountsDrawerHeader(
+            accountName: Text(active_user),
+            accountEmail: Text("xyz@gmail.com"),
+            currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage("https://i.pravatar.cc/150")),
+          ),
+          ListTile(
+            title: new Text("Home"),
+            leading: new Icon(Icons.inbox),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Home()));
+            },
+          ),
+          ListTile(
+            title: new Text("My Creations"),
+            leading: new Icon(Icons.mood),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => MyCreations()));
+            },
+          ),
+          ListTile(
+            title: new Text("Leaderboard"),
+            leading: new Icon(Icons.leaderboard),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Leaderboard()));
+            },
+          ),
+          ListTile(
+            title: new Text("Settings"),
+            leading: new Icon(Icons.settings),
+            onTap: () {
+              // Navigator.popAndPushNamed(context, "settings");Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Settings()));
+            },
+          ),
+          Divider(),
+          ListTile(
+            title: new Text("Logout"),
+            leading: new Icon(Icons.logout),
+            onTap: () {
+              // doLogout();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -79,6 +144,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Testing"),
+      ),
       body: ListView(padding: EdgeInsets.all(8), children: [
         Container(
             height: MediaQuery.of(context).size.height,
@@ -93,6 +161,7 @@ class _HomeState extends State<Home> {
                   }
                 })),
       ]),
+      drawer: myDrawer(),
     );
   }
 
