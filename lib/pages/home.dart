@@ -57,16 +57,62 @@ class _HomeState extends State<Home> {
 
   void sendLike(memeID) async {
     final response = await http.post(
-        Uri.parse("https://ubaya.fun/flutter/160719064/memes/update_like.php"),
+        Uri.parse("https://ubaya.fun/flutter/160719064/memes/cek_like.php"),
+        body: {'meme_id': memeID.toString(), 'user_id': active_user});
+    if (response.statusCode == 200) {
+      Map json = jsonDecode(response.body);
+      if (json['result'] == 'Sudah Like') {
+        if (!mounted) return;
+        final response = await http.post(
+            Uri.parse("https://ubaya.fun/flutter/160719064/memes/dislike.php"),
+            body: {
+              'meme_id': memeID.toString(),
+              'user_id': active_user,
+            });
+        if (response.statusCode == 200) {
+          Map json = jsonDecode(response.body);
+          if (json['result'] == 'success') {
+            if (!mounted) return;
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Cancel Like Sukses')));
+          }
+        }
+      }else{
+        final response = await http.post(
+            Uri.parse(
+                "https://ubaya.fun/flutter/160719064/memes/update_like.php"),
+            body: {
+              'meme_id': memeID.toString(),
+              'user_id': active_user,
+            });
+        if (response.statusCode == 200) {
+          Map json = jsonDecode(response.body);
+          if (json['result'] == 'success') {
+            if (!mounted) return;
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text('Like Sukses')));
+          }
+        }
+      }
+    } else {
+      throw Exception('Failed to read API');
+    }
+    
+  }
+
+  void cancelLike(memeID) async {
+    final response = await http.post(
+        Uri.parse("https://ubaya.fun/flutter/160719064/memes/disslike.php"),
         body: {
           'meme_id': memeID.toString(),
+          'user_id': active_user,
         });
     if (response.statusCode == 200) {
       Map json = jsonDecode(response.body);
       if (json['result'] == 'success') {
         if (!mounted) return;
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Like Sukses')));
+            .showSnackBar(const SnackBar(content: Text('Cancel Like Sukses')));
       }
     } else {
       throw Exception('Failed to read API');
@@ -267,6 +313,7 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 // print(lm[index].id);
                                 sendLike(lm[index].id);
+                                
                               });
                             },
                           ),
