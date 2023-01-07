@@ -243,7 +243,7 @@ class _DetailMemeState extends State<DetailMeme> {
     final response = await http.post(
         Uri.parse("https://ubaya.fun/flutter/160719064/memes/new_comment.php"),
         body: {
-          'meme_id': widget.memeID,
+          'meme_id': widget.memeID.toString(),
           'users_id': active_user,
           'comment': _comment.toString()
         });
@@ -254,6 +254,7 @@ class _DetailMemeState extends State<DetailMeme> {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Sukses Menambah Data')));
         _comment = "";
+        bacaData();
       }
     } else {
       throw Exception('Failed to read API');
