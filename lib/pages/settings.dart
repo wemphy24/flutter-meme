@@ -21,17 +21,17 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   // Users? _du;
-  bool? check2 = false;
+  bool? privacyChecked = false;
 
   final _formKey = GlobalKey<FormState>();
   Users du = Users(
-    id: 0,
-    username: '',
-    first_name: '',
-    last_name: '',
-    registration_date: '',
-    avatar: '',
-  );
+      id: 0,
+      username: '',
+      first_name: '',
+      last_name: '',
+      registration_date: '',
+      avatar: '',
+      privacy: 0);
 
   TextEditingController _fnameController = TextEditingController();
   TextEditingController _lnameController = TextEditingController();
@@ -54,6 +54,9 @@ class _SettingsState extends State<Settings> {
       setState(() {
         _fnameController.text = du.first_name;
         _lnameController.text = du.last_name;
+        if (du.privacy == 1) {
+          privacyChecked = true;
+        }
       });
     });
   }
@@ -72,6 +75,7 @@ class _SettingsState extends State<Settings> {
         body: {
           'first_name': du.first_name,
           'last_name': du.last_name,
+          'privacy': du.privacy,
           'user_id': active_user
         });
     if (response.statusCode == 200) {
@@ -138,8 +142,8 @@ class _SettingsState extends State<Settings> {
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    fit: BoxFit.cover,
                     image: NetworkImage(du.avatar),
+                    fit: BoxFit.cover,
                   )),
             ),
             Container(
@@ -188,11 +192,14 @@ class _SettingsState extends State<Settings> {
                         ),
                         Container(
                             child: CheckboxListTile(
-                          value: check2,
+                          value: privacyChecked,
                           controlAffinity: ListTileControlAffinity.leading,
                           onChanged: (bool? value) {
                             setState(() {
-                              check2 = value;
+                              privacyChecked = value!;
+                              if (privacyChecked == true) {
+                                du.privacy = 1;
+                              }
                             });
                           },
                           title: Text("Hide my name"),

@@ -5,6 +5,7 @@ class Users {
   String last_name;
   String registration_date;
   String avatar;
+  int privacy;
 
   Users({
     required this.id,
@@ -13,6 +14,7 @@ class Users {
     required this.last_name,
     required this.registration_date,
     required this.avatar,
+    required this.privacy
   });
 
   factory Users.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,8 @@ class Users {
       last_name: json['last_name'] as String,
       registration_date: json['registration_date'] as String,
       avatar: json['avatar'] as String,
+      privacy: json['privacy'] as int,
+
     );
   }
 }
