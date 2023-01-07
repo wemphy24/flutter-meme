@@ -3,19 +3,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:meme_app/class/rank.dart';
 import 'package:meme_app/class/users.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:meme_app/main.dart';
 
 class Leaderboard extends StatefulWidget {
-  Leaderboard({Key? key}) : super(key: key);
+  // Leaderboard({Key? key}) : super(key: key);
   @override
   State<Leaderboard> createState() => _LeaderboardState();
 }
 
 class _LeaderboardState extends State<Leaderboard> {
-  List<Users> users = [];
+  List<Rank> ranks = [];
 
   Future<String> fetchData() async {
     final response = await http.post(
@@ -29,14 +30,14 @@ class _LeaderboardState extends State<Leaderboard> {
   }
 
   bacaData() {
-    users.clear();
+    ranks.clear();
     Future<String> data = fetchData();
     data.then((value) {
       setState(() {
         Map json = jsonDecode(value);
-        for (var user in json['data']) {
-          Users mov = Users.fromJson(user);
-          users.add(mov);
+        for (var rank in json['data']) {
+          Rank ra = Rank.fromJson(rank);
+          ranks.add(ra);
         }
       });
     });
@@ -69,10 +70,10 @@ class _LeaderboardState extends State<Leaderboard> {
   }
 
   Widget listRanks(data) {
-    List<Users> lr = [];
+    List<Rank> lr = [];
     Map json = jsonDecode(data);
     for (var ran in json['data']) {
-      Users r = Users.fromJson(ran);
+      Rank r = Rank.fromJson(ran);
       lr.add(r);
     }
     return ListView.builder(
@@ -106,14 +107,8 @@ class _LeaderboardState extends State<Leaderboard> {
                       ],
                     ),
                     Row(children: [
-                      IconButton(
-                        color: Colors.red,
-                        icon: Icon(Icons.favorite),
-                        onPressed: () {
-                          // ...
-                        },
-                      ),
-                      Text("2100")
+                      Icon(Icons.favorite, color: Colors.red),
+                      Text(lr[index].total_likes),
                     ])
                   ]),
             )

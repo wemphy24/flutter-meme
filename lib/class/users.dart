@@ -14,7 +14,7 @@ class Users {
     required this.last_name,
     required this.registration_date,
     required this.avatar,
-    required this.privacy
+    required this.privacy,
   });
 
   factory Users.fromJson(Map<String, dynamic> json) {
