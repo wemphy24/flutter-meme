@@ -75,7 +75,7 @@ class _SettingsState extends State<Settings> {
         body: {
           'first_name': du.first_name,
           'last_name': du.last_name,
-          'privacy': du.privacy,
+          'privacy': du.privacy.toString(),
           'user_id': active_user
         });
     if (response.statusCode == 200) {
@@ -199,6 +199,8 @@ class _SettingsState extends State<Settings> {
                               privacyChecked = value!;
                               if (privacyChecked == true) {
                                 du.privacy = 1;
+                              }else{
+                                du.privacy=0;
                               }
                             });
                           },
