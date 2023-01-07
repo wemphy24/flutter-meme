@@ -75,6 +75,7 @@ class _HomeState extends State<Home> {
             if (!mounted) return;
             ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Cancel Like Sukses')));
+            bacaData();
           }
         }
       }else{
@@ -91,6 +92,7 @@ class _HomeState extends State<Home> {
             if (!mounted) return;
             ScaffoldMessenger.of(context)
                 .showSnackBar(const SnackBar(content: Text('Like Sukses')));
+                bacaData();
           }
         }
       }
