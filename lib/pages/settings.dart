@@ -95,36 +95,34 @@ class _SettingsState extends State<Settings> {
 
   void _showPicker(context) {
     showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return SafeArea(
-        child: Container(
-        color: Colors.white,
-        child: Wrap(
-          children: <Widget>[
-          ListTile(
-            tileColor: Colors.white,
-            leading: Icon(Icons.photo_library),
-            title: Text('Galeri'),
-            onTap: () {
-              _imgGaleri();
-              Navigator.of(context).pop();
-            }
-          ),
-          ListTile(
-            leading: Icon(Icons.photo_camera),
-            title: const Text('Kamera'),
-            onTap: () {
-              _imgKamera();
-              Navigator.of(context).pop();
-            },
-          ),
-          ],
-        ),
-        ),
-        );
-      }
-    );
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              color: Colors.white,
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                      tileColor: Colors.white,
+                      leading: Icon(Icons.photo_library),
+                      title: Text('Galeri'),
+                      onTap: () {
+                        _imgGaleri();
+                        Navigator.of(context).pop();
+                      }),
+                  ListTile(
+                    leading: Icon(Icons.photo_camera),
+                    title: const Text('Kamera'),
+                    onTap: () {
+                      _imgKamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   void prosesFoto() {
@@ -188,8 +186,6 @@ class _SettingsState extends State<Settings> {
     }
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -225,21 +221,23 @@ class _SettingsState extends State<Settings> {
             child: Column(
           children: [
             GestureDetector(
-                onTap: () {
-                  _showPicker(context);
-                }, 
-                child: 
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: _imageProses!=null ? FileImage(_imageProses!): NetworkImage(du.avatar) as ImageProvider,
-                    fit: BoxFit.cover,
-                  )),
-            ),),
+              onTap: () {
+                _showPicker(context);
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: _imageProses != null
+                          ? FileImage(_imageProses!)
+                          : NetworkImage(du.avatar) as ImageProvider,
+                      fit: BoxFit.cover,
+                    )),
+              ),
+            ),
             Container(
                 child: Form(
               key: _formKey,
