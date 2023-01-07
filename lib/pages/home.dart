@@ -79,11 +79,33 @@ class _HomeState extends State<Home> {
       elevation: 16.0,
       child: Column(
         children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text(active_user),
-            accountEmail: Text("xyz@gmail.com"),
-            currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage("https://i.pravatar.cc/150")),
+          Container(
+            child: UserAccountsDrawerHeader(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                          'https://assets.promediateknologi.com/crop/0x0:0x0/0x0/webp/photo/2022/11/05/2185194330.jpg'))),
+              accountName: Text("$first_name $last_name"),
+              accountEmail: Text(user_name),
+              currentAccountPicture: CircleAvatar(
+                  backgroundImage: NetworkImage("https://i.pravatar.cc/150")),
+              otherAccountsPictures: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.orange, shape: BoxShape.circle),
+                  child: IconButton(
+                    color: Colors.white,
+                    icon: Icon(Icons.logout),
+                    onPressed: () {
+                      setState(() {
+                        doLogout();
+                      });
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
           ListTile(
             title: new Text("Home"),
@@ -122,14 +144,14 @@ class _HomeState extends State<Home> {
                   .push(MaterialPageRoute(builder: (context) => Settings()));
             },
           ),
-          Divider(),
-          ListTile(
-            title: new Text("Logout"),
-            leading: new Icon(Icons.logout),
-            onTap: () {
-              // doLogout();
-            },
-          ),
+          // Divider(),
+          // ListTile(
+          //   title: new Text("Logout"),
+          //   leading: new Icon(Icons.logout),
+          //   onTap: () {
+          //     // doLogout();
+          //   },
+          // ),
         ],
       ),
     );
@@ -145,7 +167,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Testing"),
+        title: Text("Daily Meme Digest"),
       ),
       body: ListView(padding: EdgeInsets.all(8), children: [
         Container(

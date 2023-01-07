@@ -63,13 +63,7 @@ class _MyCreationsState extends State<MyCreations> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => Home())),
-        ),
         title: Text("Daily Meme Digest"),
-        centerTitle: true,
       ),
       body: ListView(padding: EdgeInsets.all(8), children: [
         Container(

@@ -11,6 +11,8 @@ import 'package:meme_app/class/users.dart';
 import 'package:meme_app/main.dart';
 import 'dart:convert';
 
+import 'package:meme_app/pages/home.dart';
+
 class Settings extends StatefulWidget {
   Settings({Key? key}) : super(key: key);
   @override
@@ -98,106 +100,135 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text("Setting"),
+          // leading: GestureDetector(
+          //   onTap: () {/* Write listener code here */},
+          //   child: Icon(
+          //     Icons.menu, // add custom icons also
+          //   ),
+          // ),
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 20),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 6),
+                  child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.orange, shape: BoxShape.circle),
+                      child: IconButton(
+                        color: Colors.white,
+                        icon: Icon(Icons.logout),
+                        onPressed: () {
+                          setState(() {
+                            doLogout();
+                          });
+                        },
+                      )),
+                )),
+          ],
+        ),
         body: Center(
             child: Column(
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: NetworkImage(du.avatar),
-                fit: BoxFit.cover,
-              )),
-        ),
-        Container(
-            child: Form(
-          key: _formKey,
-          child: Column(
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              Text(du.first_name + " " + du.last_name,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(du.avatar),
                   )),
-              Text('Active since ' +
-                  du.registration_date), //ambil bulan dan tahunnya aja
-              Text(du.username),
-              // ignore: prefer_const_literals_to_create_immutables
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
+            ),
+            Container(
+                child: Form(
+              key: _formKey,
+              child: Column(
+                // ignore: prefer_const_literals_to_create_immutables
+                children: [
+                  Text(du.first_name + " " + du.last_name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      )),
+                  Text('Active since ' +
+                      du.registration_date), //ambil bulan dan tahunnya aja
+                  Text(du.username),
                   // ignore: prefer_const_literals_to_create_immutables
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 15),
-                      child: TextFormField(
-                          decoration: InputDecoration(
-                            // border: OutlineInputBorder(),
-                            labelText: 'First Name',
-                          ),
-                          onChanged: (value) {
-                            du.first_name = value;
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      // ignore: prefer_const_literals_to_create_immutables
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 15),
+                          child: TextFormField(
+                              decoration: InputDecoration(
+                                // border: OutlineInputBorder(),
+                                labelText: 'First Name',
+                              ),
+                              onChanged: (value) {
+                                du.first_name = value;
+                              },
+                              controller: _fnameController),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          child: TextFormField(
+                              decoration: InputDecoration(
+                                // border: OutlineInputBorder(),
+                                labelText: 'Last Name',
+                              ),
+                              onChanged: (value) {
+                                du.last_name = value;
+                              },
+                              controller: _lnameController),
+                        ),
+                        Container(
+                            child: CheckboxListTile(
+                          value: check2,
+                          controlAffinity: ListTileControlAffinity.leading,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              check2 = value;
+                            });
                           },
-                          controller: _fnameController),
+                          title: Text("Hide my name"),
+                        ))
+                      ],
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      child: TextFormField(
-                          decoration: InputDecoration(
-                            // border: OutlineInputBorder(),
-                            labelText: 'Last Name',
-                          ),
-                          onChanged: (value) {
-                            du.last_name = value;
-                          },
-                          controller: _lnameController),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 300,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                var state = _formKey.currentState;
+                                if (state == null || !state.validate()) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text('Harap Isian diperbaiki')));
+                                } else {
+                                  submit();
+                                }
+                              },
+                              child: Text('Save Changes')),
+                        ),
+                      ],
                     ),
-                    Container(
-                        child: CheckboxListTile(
-                      value: check2,
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          check2 = value;
-                        });
-                      },
-                      title: Text("Hide my name"),
-                    ))
-                  ],
-                ),
+                  )
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 300,
-                      child: ElevatedButton(
-                          onPressed: () {
-                            var state = _formKey.currentState;
-                            if (state == null || !state.validate()) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text('Harap Isian diperbaiki')));
-                            } else {
-                              submit();
-                            }
-                          },
-                          child: Text('Save Changes')),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        )),
-      ],
-    )));
+            )),
+          ],
+        )));
   }
 
   void submitChanges() async {}

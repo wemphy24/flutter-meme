@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
   BottomNavigationBar myBottomNavBar() {
     return BottomNavigationBar(
       currentIndex: _current_index,
-      fixedColor: Colors.teal,
+      fixedColor: Colors.purple,
       // ignore: prefer_const_literals_to_create_immutables
       items: [
         BottomNavigationBarItem(
