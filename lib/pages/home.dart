@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -271,7 +270,10 @@ class _HomeState extends State<Home> {
                               });
                             },
                           ),
-                          Text(lm[index].likes.toString())
+                          Text(lm[index].likes.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ))
                         ],
                       ),
                       Container(

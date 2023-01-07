@@ -6,7 +6,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:meme_app/class/users.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:meme_app/main.dart';
 
 class Leaderboard extends StatefulWidget {

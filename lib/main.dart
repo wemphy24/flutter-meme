@@ -5,7 +5,6 @@ import 'package:meme_app/pages/creatememe.dart';
 import 'package:meme_app/pages/detailmeme.dart';
 import 'package:meme_app/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'pages/home.dart';
 import 'pages/leaderboard.dart';
 import 'pages/mycreations.dart';

@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -125,7 +124,12 @@ class _DetailMemeState extends State<DetailMeme> {
                         });
                       },
                     ),
-                    Text(_lm!.likes.toString())
+                    Text(
+                      _lm!.likes.toString(),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    )
                   ],
                 ),
               ],
@@ -138,44 +142,49 @@ class _DetailMemeState extends State<DetailMeme> {
     if (_lm == null) {
       return const CircularProgressIndicator();
     }
-    return Card(
-      color: Colors.grey[200],
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: _lm?.comments?.length,
-              itemBuilder: (BuildContext ctxt, int index) {
-                return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                _lm!.comments?[index]['username'],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              Text((_lm!.comments?[index]['date']).toString(),
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  )),
-                            ]),
-                      ),
-                      Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(_lm!.comments?[index]['comment']))
-                    ]);
-              })),
-    );
+    return SingleChildScrollView(
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: _lm?.comments?.length,
+            itemBuilder: (BuildContext ctxt, int index) {
+              return Card(
+                  color: Colors.grey[350],
+                  // elevation: 4.0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      _lm!.comments?[index]['username'],
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    Text(
+                                        (_lm!.comments?[index]['date'])
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                        )),
+                                  ]),
+                            ),
+                            Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(_lm!.comments?[index]['comment']))
+                          ])));
+              ;
+            }));
   }
 
   @override
