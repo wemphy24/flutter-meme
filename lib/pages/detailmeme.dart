@@ -42,7 +42,6 @@ class _DetailMemeState extends State<DetailMeme> {
   }
 
   Future onGoBack(dynamic value) async {
-    //	 print("masuk goback");
     setState(() {
       bacaData();
     });
