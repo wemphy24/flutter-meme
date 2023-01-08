@@ -189,7 +189,28 @@ class _DetailMemeState extends State<DetailMeme> {
                             ),
                             Container(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(_lm!.comments?[index]['comment']))
+                                child: Text(_lm!.comments?[index]['comment'])),
+                            Row(
+                              children: [
+                                IconButton(
+                                  color: _lm!.likes != 0
+                                      ? Colors.blue
+                                      : Colors.grey[200],
+                                  icon: Icon(Icons.thumb_up),
+                                  onPressed: () {
+                                    setState(() {
+                                      // print(_lm!.id);
+                                      sendCommentLike(_lm!.comments?[index]['id'].toString());
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  (_lm!.comments?[index]['totalCommentLikes']).toString(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                    ))
+                              ],
+                            ),
                           ])));
             }));
   }
@@ -323,22 +344,21 @@ class _DetailMemeState extends State<DetailMeme> {
     }
   }
 
-  void cancelLike(memeID) async {
+  void sendCommentLike(commentID) async {
     final response = await http.post(
-        Uri.parse("https://ubaya.fun/flutter/160719064/memes/disslike.php"),
-        body: {
-          'meme_id': memeID.toString(),
-          'user_id': active_user,
-        });
+        Uri.parse("https://ubaya.fun/flutter/160719064/memes/update_commentlike.php"),
+        body: {'comment_id': commentID.toString(), 'user_id': active_user});
     if (response.statusCode == 200) {
       Map json = jsonDecode(response.body);
-      if (json['result'] == 'success') {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Cancel Like Sukses')));
-      }
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(json['result'])));
+          bacaData();
+        
     } else {
       throw Exception('Failed to read API');
     }
   }
+
+
 }
