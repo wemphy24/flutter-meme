@@ -181,14 +181,6 @@ class _HomeState extends State<Home> {
                   .push(MaterialPageRoute(builder: (context) => Settings()));
             },
           ),
-          // Divider(),
-          // ListTile(
-          //   title: new Text("Logout"),
-          //   leading: new Icon(Icons.logout),
-          //   onTap: () {
-          //     // doLogout();
-          //   },
-          // ),
         ],
       ),
     );
@@ -310,8 +302,7 @@ class _HomeState extends State<Home> {
                               ))
                         ],
                       ),
-                      Row(
-                        children: [
+                      Row(children: [
                         Text(
                           "${lm[index].totalComments} Comments",
                           style: TextStyle(
@@ -319,15 +310,16 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         IconButton(
-                        icon: Icon(Icons.message),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      DetailMeme(memeID: lm[index].id)));
-                        },
-                      )]),
+                          icon: Icon(Icons.message),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailMeme(memeID: lm[index].id)));
+                          },
+                        )
+                      ]),
                     ],
                   )
                 ],

@@ -187,32 +187,41 @@ class _DetailMemeState extends State<DetailMeme> {
                                   ]),
                             ),
                             Container(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(_lm!.comments?[index]['comment'])),
-                            Row(
-                              children: [
-                                IconButton(
-                                  color: _lm!.likes != 0
-                                      ? Colors.blue
-                                      : Colors.grey[200],
-                                  icon: Icon(Icons.thumb_up),
-                                  onPressed: () {
-                                    setState(() {
-                                      // print(_lm!.id);
-                                      sendCommentLike(_lm!.comments?[index]
-                                              ['id']
-                                          .toString());
-                                    });
-                                  },
-                                ),
-                                Text(
-                                    (_lm!.comments?[index]['totalCommentLikes'])
-                                        .toString(),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                    ))
-                              ],
-                            ),
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      _lm!.comments?[index]['comment'],
+                                    ),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          color: _lm!.likes != 0
+                                              ? Colors.blue
+                                              : Colors.grey[200],
+                                          icon: Icon(Icons.thumb_up),
+                                          onPressed: () {
+                                            setState(() {
+                                              // print(_lm!.id);
+                                              sendCommentLike(_lm!
+                                                  .comments?[index]['id']
+                                                  .toString());
+                                            });
+                                          },
+                                        ),
+                                        Text(
+                                            (_lm!.comments?[index]
+                                                    ['totalCommentLikes'])
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                            ))
+                                      ],
+                                    ),
+                                  ]),
+                            )
                           ])));
             }));
   }
@@ -271,6 +280,7 @@ class _DetailMemeState extends State<DetailMeme> {
                           content: Text('Harap Isian diperbaiki')));
                     } else {
                       sendComment();
+                      _formKey.currentState!.reset();
                     }
                   },
                 )

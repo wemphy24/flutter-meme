@@ -21,16 +21,14 @@ class Memes {
       this.totalComments});
   factory Memes.fromJson(Map<String, dynamic> json) {
     return Memes(
-      id: json['meme_id'] as int,
-      url: json['url'] as String,
-      top_text: json['top_text'] as String,
-      bottom_text: json['bottom_text'] as String,
-      date: json['date'] as String,
-      likes: json['likes'] as int,
-      user_id: json['users_id'] as int,
-      comments: json['comments'],
-      totalComments: json['totalComments']
-      
-    );
+        id: json['meme_id'] as int,
+        url: json['url'] as String,
+        top_text: json['top_text'] as String,
+        bottom_text: json['bottom_text'] as String,
+        date: json['date'] as String,
+        likes: json['likes'] as int,
+        user_id: json['users_id'] as int,
+        comments: json['comments'],
+        totalComments: json['totalComments']);
   }
 }
