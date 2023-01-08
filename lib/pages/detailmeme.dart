@@ -115,7 +115,6 @@ class _DetailMemeState extends State<DetailMeme> {
                       icon: Icon(Icons.favorite),
                       onPressed: () {
                         setState(() {
-                          // checking like
                           sendLike(_lm!.id);
                           bacaData();
                         });
@@ -200,12 +199,15 @@ class _DetailMemeState extends State<DetailMeme> {
                                   onPressed: () {
                                     setState(() {
                                       // print(_lm!.id);
-                                      sendCommentLike(_lm!.comments?[index]['id'].toString());
+                                      sendCommentLike(_lm!.comments?[index]
+                                              ['id']
+                                          .toString());
                                     });
                                   },
                                 ),
                                 Text(
-                                  (_lm!.comments?[index]['totalCommentLikes']).toString(),
+                                    (_lm!.comments?[index]['totalCommentLikes'])
+                                        .toString(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                     ))
@@ -346,19 +348,17 @@ class _DetailMemeState extends State<DetailMeme> {
 
   void sendCommentLike(commentID) async {
     final response = await http.post(
-        Uri.parse("https://ubaya.fun/flutter/160719064/memes/update_commentlike.php"),
+        Uri.parse(
+            "https://ubaya.fun/flutter/160719064/memes/update_commentlike.php"),
         body: {'comment_id': commentID.toString(), 'user_id': active_user});
     if (response.statusCode == 200) {
       Map json = jsonDecode(response.body);
       if (!mounted) return;
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(json['result'])));
-          bacaData();
-        
+      bacaData();
     } else {
       throw Exception('Failed to read API');
     }
   }
-
-
 }
