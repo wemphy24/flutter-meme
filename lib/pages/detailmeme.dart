@@ -126,9 +126,21 @@ class _DetailMemeState extends State<DetailMeme> {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
-                    )
+                    ),
                   ],
                 ),
+                Row(children: [
+                  Text(
+                    "${_lm!.totalComments} Comments",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.message),
+                    onPressed: () {},
+                  ),
+                ]),
               ],
             )
           ],

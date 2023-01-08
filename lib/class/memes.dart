@@ -7,6 +7,8 @@ class Memes {
   int likes;
   int user_id;
   List? comments;
+  int? totalCommentLikes;
+  int? totalComments;
 
   Memes(
       {required this.id,
@@ -16,7 +18,9 @@ class Memes {
       required this.date,
       required this.likes,
       required this.user_id,
-      this.comments});
+      this.comments,
+      this.totalCommentLikes,
+      this.totalComments});
   factory Memes.fromJson(Map<String, dynamic> json) {
     return Memes(
       id: json['meme_id'] as int,
@@ -27,6 +31,9 @@ class Memes {
       likes: json['likes'] as int,
       user_id: json['users_id'] as int,
       comments: json['comments'],
+      totalCommentLikes: json['totalCommentLikes'] ,
+      totalComments: json['totalComments']
+      
     );
   }
 }

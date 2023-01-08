@@ -310,8 +310,15 @@ class _HomeState extends State<Home> {
                               ))
                         ],
                       ),
-                      Container(
-                          child: IconButton(
+                      Row(
+                        children: [
+                        Text(
+                          "${lm[index].totalComments} Comments",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        IconButton(
                         icon: Icon(Icons.message),
                         onPressed: () {
                           Navigator.push(
@@ -320,7 +327,7 @@ class _HomeState extends State<Home> {
                                   builder: (context) =>
                                       DetailMeme(memeID: lm[index].id)));
                         },
-                      )),
+                      )]),
                     ],
                   )
                 ],
