@@ -115,6 +115,7 @@ class _DetailMemeState extends State<DetailMeme> {
                       icon: Icon(Icons.favorite),
                       onPressed: () {
                         setState(() {
+                          // checking like
                           sendLike(_lm!.id);
                           bacaData();
                         });
