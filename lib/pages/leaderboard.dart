@@ -10,7 +10,7 @@ import 'dart:convert';
 import 'package:meme_app/main.dart';
 
 class Leaderboard extends StatefulWidget {
-  Leaderboard({Key? key}) : super(key: key);
+  // Leaderboard({Key? key}) : super(key: key);
   @override
   State<Leaderboard> createState() => _LeaderboardState();
 }
@@ -103,7 +103,7 @@ class _LeaderboardState extends State<Leaderboard> {
                               )),
                         ),
                         Text(lr[index].privacy != 1
-                            ? lr[index].first_name + lr[index].last_name
+                            ? lr[index].first_name + " " + lr[index].last_name
                             : "${(lr[index].first_name + lr[index].last_name).substring(0, 3)}${(lr[index].first_name + lr[index].last_name).substring(3).replaceAll(RegExp(r'[a-zA-Z]'), '*')}")
                       ],
                     ),
