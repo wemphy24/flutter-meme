@@ -149,8 +149,6 @@ class _HomeState extends State<Home> {
             leading: new Icon(Icons.inbox),
             onTap: () {
               Navigator.pop(context);
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Home()));
             },
           ),
           ListTile(
