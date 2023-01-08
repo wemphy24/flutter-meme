@@ -10,7 +10,7 @@ import 'dart:convert';
 import 'package:meme_app/main.dart';
 
 class Leaderboard extends StatefulWidget {
-  // Leaderboard({Key? key}) : super(key: key);
+  Leaderboard({Key? key}) : super(key: key);
   @override
   State<Leaderboard> createState() => _LeaderboardState();
 }
