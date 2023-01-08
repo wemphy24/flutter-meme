@@ -147,6 +147,11 @@ class _MyCreationsState extends State<MyCreations> {
                           ],
                         )
                       ])),
+                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 10, top: 5),
+                        child: Text(lm[index].date))
+                  ]),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -159,20 +164,30 @@ class _MyCreationsState extends State<MyCreations> {
                               // ...
                             },
                           ),
-                          Text(lm[index].likes.toString())
+                          Text(
+                            lm[index].likes.toString(),
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          )
                         ],
                       ),
-                      Container(
-                          child: IconButton(
-                        icon: Icon(Icons.message),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      DetailMeme(memeID: lm[index].id)));
-                        },
-                      )),
+                      Row(children: [
+                        Text(
+                          "${lm[index].totalComments} Comments",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.message),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailMeme(memeID: lm[index].id)));
+                          },
+                        )
+                      ]),
                     ],
                   )
                 ],
